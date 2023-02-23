@@ -27,4 +27,14 @@ describe("Hello World", function () {
         expect(owner).to.eq(deployerAccount);
     })
 
+    it("should not allow any other owner to call transferOwnership function", async function(){
+        const signers = await ethers.getSigners();
+        let owner = await helloWorldContract.owner()
+        console.log("owner before is" + owner)
+        const tx = await helloWorldContract.transferOwnership(signers[1].address);
+        await tx.wait();
+        owner = await helloWorldContract.owner()
+        console.log("owner after is" + owner)
+    })
+
 })
